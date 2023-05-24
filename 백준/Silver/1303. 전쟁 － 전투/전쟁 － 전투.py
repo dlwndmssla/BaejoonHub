@@ -6,10 +6,6 @@ battle = []
 for i in range(m):
     ex = list(map(str,input().rstrip()))
     battle.append(ex)
-    
-#print(battle)
-visited = [[False for i in range(n)] for j in range(m)]
-#print(visited)
 
 visited = [[False for i in range(n)] for j in range(m)]
 x,y = 0,0
