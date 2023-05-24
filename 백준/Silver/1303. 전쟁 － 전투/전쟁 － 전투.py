@@ -19,12 +19,9 @@ def dfs(graph, x, y, visited):
     for k in range(4):
         i = [0,0,-1,1][k]
         j = [-1,1,0,0][k]
-        if 0 <=x+i<= n-1 and 0 <=y+j<= m-1:
-            if not visited[y+j][x+i]: 
-                if battle[y][x] == battle[y+j][x+i]:
-                    visited[y+j][x+i] = True
-                    if 0 <=x+i<= n-1 and 0 <=y+j<= m-1:
-                        dfs(graph,x+i,y+j,visited)
+        if 0 <=x+i<= n-1 and 0 <=y+j<= m-1 and not visited[y+j][x+i] and battle[y][x] == battle[y+j][x+i]:
+            visited[y+j][x+i] = True
+            dfs(graph,x+i,y+j,visited)
                     
 wc,bc = 0,0
 count0 = 0
@@ -36,6 +33,7 @@ for s in range(n):
             continue
         dfs(graph, x, y, visited)
         count_ex = sum([sum(visited[kk]) for kk in range(len(visited))])
+        
         if battle[y][x] == 'W':
             wc += pow(count_ex- count0,2)
         else:
