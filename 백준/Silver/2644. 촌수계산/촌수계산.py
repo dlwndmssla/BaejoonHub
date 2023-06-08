@@ -1,6 +1,6 @@
 import sys
 sys.setrecursionlimit(10 ** 6)
-input = sys.stdin.readline
+#input = sys.stdin.readline
 
 n = int(input())
 a,b = map(int, input().split())
@@ -14,7 +14,6 @@ for i in range(m):
 
 def dfs(graph, v, parent, visited):
     visited[v] = True
-    x0 = v
     for i in graph[v]:
         if not visited[i]:
             visited[i] = True
