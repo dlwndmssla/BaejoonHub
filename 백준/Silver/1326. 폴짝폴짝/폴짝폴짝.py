@@ -14,7 +14,8 @@ def bfs(graph, v, visited):
     queue = deque([v])
     while queue:
         v = queue.popleft()
-        for i in range(1,n+1):
+        
+        for i in range(v,0,-graph[v]):
             if not visited[i]:
                 if (v-i)%graph[v] == 0:
                     visited[i] = True
@@ -22,6 +23,16 @@ def bfs(graph, v, visited):
                     c0[i] = c0[v] + 1
                     if i == b:
                         break_check = True
+        
+        for i in range(v,n+1,graph[v]):
+            if not visited[i]:
+                if (v-i)%graph[v] == 0:
+                    visited[i] = True
+                    queue.append(i)
+                    c0[i] = c0[v] + 1
+                    if i == b:
+                        break_check = True
+                                        
         if break_check:
             break
                     
