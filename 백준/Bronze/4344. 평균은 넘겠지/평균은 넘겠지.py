@@ -1,16 +1,15 @@
-C = int(input())
+import sys
+input = sys.stdin.readline
 
-for i in range(C):
-    a = input().split()
-    sum = 0.0
-    for j in range(1,len(a)):
-        sum += int(a[j])
-    real = sum/int(a[0])
-    k = 0
-    
-    for j in range(1,len(a)):
-        if int(a[j]) > real:
-            k+=1
-        if j == len(a)-1:
-            x = ("{:.3f}".format(k/int(a[0])*100))+"%"
-            print(x)
+n = int(input())
+
+for i in range(n):
+    ex = list(map(int,input().split()))
+    x = sum(ex[1:])/ex[0]
+    cnt = 0
+    for j in range(ex[0]):
+        if ex[j+1] > x:
+            cnt += 1
+            
+    print('{:.3f}%'.format(round(cnt*100/ex[0],3)))
+        
