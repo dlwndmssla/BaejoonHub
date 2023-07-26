@@ -43,18 +43,14 @@ for p in range(a):
         
     case1 = dijkstra(graph0,s)
     case2 = dijkstra(graph1,s)
-
-    #print(case1[1:])
-    #print(case2[1:])
-
     ans = []
-    #print(destination)
+
     for c in destination:
         if case1[c] < case2[c]:
             ans.append(c)
         elif case1[c] == case2[c]:
-            ex1 = dijkstra(graph0,s)[g] + road + dijkstra(graph0,h)[c]
-            ex2 = dijkstra(graph0,s)[h] + road + dijkstra(graph0,g)[c]
+            ex1 = case1[g] + road + dijkstra(graph0,h)[c]
+            ex2 = case1[h] + road + dijkstra(graph0,g)[c]
             ex0 = min(ex1,ex2)
             if ex0 == case1[c]:
                 ans.append(c)      
