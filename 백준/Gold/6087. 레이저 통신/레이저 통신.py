@@ -24,16 +24,14 @@ def dijkstra(graph,start):
             y0,x0 = y , x 
             while True:   
                 y0,x0 = y0 + [0,0,-1,1][t], x0 + [-1,1,0,0][t]
-                if 0 <= y0 <= n-1 and 0 <= x0 <= m-1 and graph[y0][x0] != '*':
+                if 0 <= y0 <= n-1 and 0 <= x0 <= m-1:
+                    if graph[y0][x0] == '*': break
                     dir,dir0 = dir_graph[y][x],t+1
-                    now0 = [y0,x0]
-                    if graph[y0][x0] == '*': continue
-                    cost = mirror(dir,dir0,x,y)
-                    dist0 = graph[y][x] + cost
+                    dist0 = graph[y][x] + mirror(dir,dir0,x,y)
                     if graph[y0][x0] > dist0:
                         graph[y0][x0] = dist0
                         dir_graph[y0][x0] = dir0
-                        heapq.heappush(queue, (dist0,now0))
+                        heapq.heappush(queue, (dist0,[y0,x0]))
                 else: break
                     
     return dir_graph, graph
