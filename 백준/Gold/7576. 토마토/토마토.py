@@ -1,41 +1,45 @@
-#7576
+#미로탐색
 import sys
 from collections import deque
 sys.setrecursionlimit(10 ** 5)
 input = sys.stdin.readline
 
-m,n = map(int, input().split())
-graph = []
+m,n = list(map(int,input().split()))
 
+graph = [] 
+v_list = []
 for i in range(n):
-    ex = list(map(int, input().split()))
-    graph.append(ex)
+    ex = list(map(int,input().split()))
+    for j in range(m):
+        if ex[j] == 1:
+            v_list.append([i,j])
+    graph.append(ex) 
 
-def bfs(graph,x,y, vlist):
-    queue = deque(vlist)
+
+def bfs(v_list):
+    queue = deque(v_list)
     while queue:
-        v = queue.popleft()
-        y,x = v[0], v[1]
+        y,x = queue.popleft()
+        cnt = graph[y][x]+1
         for t in range(4):
-            x0 = x + [-1,1,0,0][t]
-            y0 = y + [0,0,-1,1][t]
-            if 0 <= x0 <= m-1 and 0 <= y0 <= n-1:
-                if graph[y0][x0] == 0:
-                    queue.append([y0,x0])
-                    graph[y0][x0] = graph[y][x] + 1
+            y0,x0 = y+[0,0,-1,1][t],x+[-1,1,0,0][t]
+            if not ((0<= y0 <=n-1) and (0<= x0<=m-1)) : continue
+            if graph[y0][x0] == -1: continue
+            if 0 < graph[y0][x0] <= cnt: continue
+            graph[y0][x0] = cnt
+            queue.append([y0,x0])
+            
 
+bfs(v_list)
 
-vlist = []
-for y in range(n):
-    for x in range(m):
-        if graph[y][x] == 1:
-            vlist.append([y,x])
-
-bfs(graph, x,y, vlist)
-
-for s in range(n):
-    if 0 in graph[s]:
-        print(-1)
-        break
-    if s == n-1:
-        print(max([max(graph[s]) for s in range(n)])-1)
+con = False
+max0 = 0
+for i in range(n):
+    for j in range(m):
+        max0 = max(max0,graph[i][j])
+        if graph[i][j] == 0:
+            con = True
+            break
+        
+if con: print(-1)
+else: print(max0-1)
