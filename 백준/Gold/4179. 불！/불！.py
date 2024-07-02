@@ -1,74 +1,66 @@
+#미로탐색
 import sys
 from collections import deque
 sys.setrecursionlimit(10 ** 5)
 input = sys.stdin.readline
 
-def bfs(graph,jihoon,fire):
+n,m = list(map(int,input().split()))
+ 
+graph = []
+fire = []
+for i in range(n):
+    ex = list(map(str,input()))
+    graph.append(ex)
+    if 'J' in ex:
+        jihun = [[i,ex.index('J')]]
+    if 'F' in ex:
+        for j in range(m):
+            if ex[j] =='F': fire.append([i,j])
+                
+
+def bfs(fire,jihun):
     queue = deque(fire)
     while queue:
-        v = queue.popleft()
-        y,x = v
-        if graph[y][x] == 'F':
-            graph[y][x] = 0
-        for t in range(4): 
-            x0 = x + [-1,1,0,0][t]
-            y0 = y + [0,0,-1,1][t]
-            if 0 <= x0 <= m-1 and 0 <= y0 <= n-1:
-                if graph[y0][x0] == '.' or graph[y][x] == 'J':
-                    graph[y0][x0] = graph[y][x] - 1
-                    v0 = [y0,x0]
-                    queue.append(v0)
+        y,x = queue.popleft()
+        for t in range(4):
+            y0,x0 = y+[0,0,-1,1][t],x+[-1,1,0,0][t]
+            if not ((0<= y0 <=n-1) and (0<= x0<=m-1)) : continue
+            if visited[y0][x0] != -1: continue
+            if graph[y0][x0] in ['#','F']: continue
+            graph[y0][x0] = 'F'
+            visited[y0][x0] = visited[y][x]+1
+            queue.append([y0,x0])
 
-    queue = deque(jihoon)
-    y,x = jihoon[0]
-    graph[y][x] = 'J'
+    queue = deque(jihun)
     while queue:
-        v = queue.popleft()
-        y,x = v
-        if graph[y][x] == 'J':
-            graph[y][x] = 0
-        for t in range(4): 
-            x0 = x + [-1,1,0,0][t]
-            y0 = y + [0,0,-1,1][t]
-            if 0 <= x0 <= m-1 and 0 <= y0 <= n-1:
-                if type(graph[y0][x0]) == int:                   
-                    if graph[y0][x0] <= 0 and abs(graph[y][x])+1 < abs(graph[y0][x0]):
-                        graph[y0][x0] = graph[y][x] + 1
-                        v0 = [y0,x0]
-                        queue.append(v0)       
-                elif graph[y0][x0] == '.':
-                    graph[y0][x0] = graph[y][x] + 1
-                    v0 = [y0,x0]
-                    queue.append(v0)
-                    
-    return graph
+        y,x = queue.popleft()
+        for t in range(4):
+            y0,x0 = y+[0,0,-1,1][t],x+[-1,1,0,0][t]
+            if not ((0<= y0 <=n-1) and (0<= x0<=m-1)) : continue
+            if graph[y0][x0]  == '#': continue
+            if visited[y0][x0] <= visited[y][x]+1 and visited[y0][x0] != -1: continue
+            graph[y0][x0] = 'J'
+            visited[y0][x0] = visited[y][x]+1
+            queue.append([y0,x0])
 
-n,m = map(int,input().split())
+visited = [[-1 for i in range(m) ]  for j in range(n) ]
 
-graph = []
-jihoon = []
-fire = []
+for v in jihun:
+    visited[v[0]][v[1]] = 0
+for v in fire:
+    visited[v[0]][v[1]] = 0
+    
+bfs(fire,jihun)
 
-for i in range(n):
-    ex = list(map(str,input().strip()))
-    for j in range(m):
-        if ex[j] == 'J':
-            jihoon.append([i,j])
-        elif ex[j] == 'F':
-            fire.append([i,j])           
-    graph.append(ex)
-        
-graph = bfs(graph,jihoon,fire)
-
-min0 = []
+ans = []
 for i in range(n):
     for j in range(m):
-        if i in [0,n-1] or j in [0,m-1]:
-            if type(graph[i][j]) == int and [i,j] not in fire:
-                if graph[i][j] >= 0:
-                    min0.append(graph[i][j])
+        if (i in [0,n-1] or j in [0, m-1] ) and graph[i][j] == 'J':
+            ans.append(visited[i][j]+1)
 
-if len(min0) == 0:
-    print('IMPOSSIBLE')
+
+if len(ans) != 0:
+    print(min(ans))
 else:
-    print(min(min0)+1)
+    print('IMPOSSIBLE')
+
