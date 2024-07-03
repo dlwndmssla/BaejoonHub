@@ -17,29 +17,22 @@ for i in range(n):
         for j in range(m):
             if ex[j] =='F': fire.append([i,j])
                 
-
 def bfs(fire,jihun):
-    queue = deque(fire)
+    queue = deque(fire+jihun)
     while queue:
         y,x = queue.popleft()
         for t in range(4):
             y0,x0 = y+[0,0,-1,1][t],x+[-1,1,0,0][t]
             if not ((0<= y0 <=n-1) and (0<= x0<=m-1)) : continue
             if visited[y0][x0] != -1: continue
-            if graph[y0][x0] in ['#','F']: continue
-            graph[y0][x0] = 'F'
-            visited[y0][x0] = visited[y][x]+1
-            queue.append([y0,x0])
-
-    queue = deque(jihun)
-    while queue:
-        y,x = queue.popleft()
-        for t in range(4):
-            y0,x0 = y+[0,0,-1,1][t],x+[-1,1,0,0][t]
-            if not ((0<= y0 <=n-1) and (0<= x0<=m-1)) : continue
-            if graph[y0][x0]  == '#': continue
-            if visited[y0][x0] <= visited[y][x]+1 and visited[y0][x0] != -1: continue
-            graph[y0][x0] = 'J'
+            if graph[y][x] == 'F':
+                if graph[y0][x0] in ['#','F']: continue
+                graph[y0][x0] = 'F'
+            elif graph[y][x] == 'J':
+                if graph[y0][x0]  == '#': continue
+                if visited[y0][x0] <= visited[y][x]+1 and visited[y0][x0] != -1: continue
+                graph[y0][x0] = 'J'
+            else: continue
             visited[y0][x0] = visited[y][x]+1
             queue.append([y0,x0])
 
