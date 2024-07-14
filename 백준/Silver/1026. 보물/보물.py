@@ -1,14 +1,8 @@
-T = int(input())
+n = int(input())
 
-A = list(map(int, input().split()))
-B = list(map(int, input().split()))
+list1 = list(map(int,input().split()))
+list2 = list(map(int,input().split()))
+list1.sort()
+list2.sort(reverse=True)
 
-A.sort()
-B.sort()
-
-sum = 0
-
-for i in range(T):
-    sum += A[i]*B[T-1-i]
-    
-print(sum)
+print( sum( list1[i]*list2[i] for i in range(n)))
