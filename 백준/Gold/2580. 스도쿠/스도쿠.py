@@ -1,5 +1,3 @@
-import sys
-
 def check_row(rn,rcheck):
     row0 = [sudoku[(rn//9)*9+i] for i in range(9)]
     return rcheck not in row0
@@ -17,8 +15,7 @@ def bk(m,sudoku):
         for k in range(9):
             print(*sudoku[0+9*k:9+9*k])
         quit()
-        return 
-    
+
     for i in candidate[m]:
         if check_row(zero[m],i) and check_col(zero[m],i) and check_box(zero[m],i,m):
             sudoku[zero[m]] = i 
