@@ -1,13 +1,10 @@
-import sys
-input = sys.stdin.readline
-a = int(input())
-ex1 = []
-for i in range(a):
-    b = int(input())
-    
-    if b !=0:
-        ex1.append(b)
+n = int(input())
+nums = []
+for i in range(n):
+    m = int(input())
+    if m:
+        nums.append(m)
     else:
-        ex1 = ex1[:-1]
-    
-print(sum(ex1))
+        nums = nums[:-1]
+        
+print(sum(nums))
