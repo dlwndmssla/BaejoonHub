@@ -1,28 +1,11 @@
-import sys
-input = sys.stdin.readline
-
-list1 = [0]
-bingo = [0]
-
-for i in range(5):
-    x = list(map(int, input().split()))
-    list1 += x
-
-for i in range(5):
-    y = list(map(int, input().split()))
-    bingo += y
-    
-row = [[ i*5+j for i in range(5)] for j in range(1,6)]
-col = [[i+5*j for i in range(1,6)] for j in range(5)]
-cross = [[1, 7, 13, 19, 25],[5, 9, 13, 17, 21]]
-okey = row+col+cross
-
-for i in range(1,26):
-    b = bingo[i]
-    idx = list1.index(b)
-    for j in range(12):
-        if idx in okey[j]:
-            okey[j].remove(idx)
-    if okey.count([]) >= 3:
+ch_num = [list(map(int,input().split())) for i in range(5)]
+x_num = [list(map(int,input().split())) for i in range(5)]
+x_num = sum(x_num,[])
+bingo = ch_num+[[ch_num[i][j] for i in range(5)] for j in range(5)] +[[ch_num[i][i] for i in range(5)],[ch_num[4-i][i] for i in range(5)]]
+for i,x in enumerate(x_num):
+    for cn_list in bingo:
+        if x not in cn_list: continue
+        cn_list.remove(x)
+    if bingo.count([])>=3:
+        print(i+1)
         break
-print(i)
