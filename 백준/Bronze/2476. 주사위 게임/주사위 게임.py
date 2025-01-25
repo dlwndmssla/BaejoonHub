@@ -1,16 +1,10 @@
-n = int(input())
-ans = 0
-for i in range(n):
-    ex = list(map(int,input().split()))
-    ex1 = list(set(ex))
-    if len(ex1) == 1:
-        ans = max(10000+1000*ex1[0],ans)
-    elif len(ex1) == 3:
-        ans = max(max(ex)*100,ans)
-    else:
-        if ex.count(ex1[0]) == 2:
-            ans = max(1000+ex1[0]*100,ans)
-        else:
-            ans = max(1000+ex1[1]*100,ans)
-            
-print(ans)
+N = int(input())
+max_point = []
+for i in range(N):
+    dice = list(map(int,input().split()))
+    sort_dice = sorted(set(dice))[::-1]
+    a = [10000+sort_dice[0]*1000,1000+sum([i*(dice.count(i)==2) for i in sort_dice])*100
+    ,max(sort_dice)*100][len(sort_dice)-1]
+    max_point.append(a)
+    
+print(max(max_point))
