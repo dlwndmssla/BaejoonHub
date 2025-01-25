@@ -1,10 +1,2 @@
-x, y, w, h = list(map(int, input().split()))
-
-exam = []
-exam.append(x)
-exam.append(y)
-exam.append(w-x)
-exam.append(h-y)
-
-exam.sort()
-print(exam[0])
+num = list(map(int,input().split()))
+print(min(min(num[0],num[0+2]-num[0]),min(num[1],num[1+2]-num[1])))
