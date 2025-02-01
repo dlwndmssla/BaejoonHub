@@ -1,28 +1,26 @@
+
 import sys
 input = sys.stdin.readline
 n = int(input())
-ex1 = ['x']
-ex1 += list(map(int, input().split()))
-student = ['x']
-switch = ['x']
-s = int(input())
-for i in range(s):
-    a,b = map(int, input().split())
-    student.append(a)
-    switch.append(b)
-    
-for i in range(1,s+1):
-    d = switch[i]
-    if student[i] ==1:
-        for j in range(d,len(ex1), d):
-            ex1[j] = abs(ex1[j]-1)
-    else:
-        for k in range(d,0,-1):
-            if 2*d-k < len(ex1):
-                if ex1[k] == ex1[2*d-k]:
-                    ex1[k] = ex1[2*d-k] = abs(ex1[k]-1)
-                else:
-                    break
+nums = [0]+list(map(int,input().split()))
 
-for i in range(1,len(ex1),20):
-    print(*ex1[i:i+20])
+#남학생1, 여학생2
+for _ in range(int(input())):
+    g,x = list(map(int,input().split())) #gender, number_x
+    if g == 2:
+        nums[x] = 1-nums[x]
+        for i in range(1,n):
+            if (x-i > 0) and (x+i < n+1) and nums[x-i] == nums[x+i]:
+                nums[x-i] = 1-nums[x-i]
+                nums[x+i] = 1-nums[x+i]
+            else: break
+            # print(nums)
+    else:
+        for i in range(1,n//x+1):
+            if x*i > n+1: break
+            nums[x*i] = 1-nums[x*i]
+            # print(nums)
+            
+nums = nums[1:]
+for i in range(n//20+1):
+    print(*nums[i*20:(i+1)*20])
