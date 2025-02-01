@@ -1,9 +1,13 @@
 import sys
 input = sys.stdin.readline
-N,M = map(int, input().split())
-exam = [i+1 for i in range(N)]
-for i in range(M):
-    a,b = map(int, input().split())
-    c = exam[a-1:b][::-1]
-    exam[a-1:b] = c
-print(*exam)
+
+n,m = list(map(int,input().split()))
+trade = [list(map(int,input().split())) for i in range(m)]
+# print(trade)
+nums = [i for i in range(1+n)]
+# print(nums)
+for s,e in trade:
+    # print(s,e)
+    nums[s:e+1] = nums[s:e+1][::-1]
+    # print(nums)
+print(*nums[1:])
