@@ -1,3 +1,7 @@
+
+import sys
+input = sys.stdin.readline
+
 nums = []
 for _ in range(int(input())):
     n = int(input())
