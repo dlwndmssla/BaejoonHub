@@ -1,3 +1,6 @@
+import sys
+input = sys.stdin.readline
+
 import itertools
 for _ in range(int(input())):
     k,n = int(input()),int(input())
