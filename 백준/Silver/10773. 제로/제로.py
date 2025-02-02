@@ -1,10 +1,7 @@
-n = int(input())
 nums = []
-for i in range(n):
-    m = int(input())
-    if m:
-        nums.append(m)
-    else:
-        nums = nums[:-1]
-        
+for _ in range(int(input())):
+    n = int(input())
+    if not n: nums.pop()
+    else: nums.append(n)
+    
 print(sum(nums))
