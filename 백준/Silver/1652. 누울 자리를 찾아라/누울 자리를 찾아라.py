@@ -1,20 +1,22 @@
+
+import itertools
+import sys
+input = sys.stdin.readline
+
 n = int(input())
-graph = []
-for i in range(n):
-    graph.append(str(input()))
-    
-graph1 = [[0 for i in range(len(graph[0]))] for j in range(n)]
-graph2 = [[0 for i in range(len(graph[0]))] for j in range(n)]
 
-a,b = 0,0
-for i in range(n):
-    for j in range(len(graph[0])):
-        if graph[i][j] == '.':
-            graph1[i][j] = graph1[i][j-1] +1 
-            graph2[i][j] = graph2[i-1][j] +1 
-            if graph1[i][j] == 2:
-                a += 1
-            if graph2[i][j] == 2:
-                b += 1
+room = [str(input()) for i in range(n)]
+room_space = [[int(r[i]=='.') for i in range(n)] for r in room]
 
-print(a,b)
+def count_space(list0):
+    for y in range(n):
+        for x in range(1,n):
+            if list0[y][x]:
+                list0[y][x] += list0[y][x-1]
+                
+    return sum(list0,[]).count(2)
+
+room_space_r = room_space
+room_space_c = list(list(i) for i in zip(*room_space))
+
+print(count_space(room_space_r),count_space(room_space_c))
