@@ -13,9 +13,7 @@ def count_space(list0):
 
 n = int(input())
 room = [str(input()) for i in range(n)]
-room_space = [[int(r[i]=='.') for i in range(n)] for r in room]
-
-room_space_r = room_space
-room_space_c = list(list(i) for i in zip(*room_space))
+room_space_r = [[int(r[i]=='.') for i in range(n)] for r in room]
+room_space_c = list(list(i) for i in zip(*room_space_r))
 
 print(count_space(room_space_r),count_space(room_space_c))
