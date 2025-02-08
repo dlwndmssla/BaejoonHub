@@ -1,30 +1,18 @@
-N,M = map(int, input().split())
-
-mini = min(N,M)
-exam = []
-
-for i in range(N):
-    list1 = list(map(str, input().split()))
-    exam.append(list1)
-k = 1
-sum = []
-
-if mini != 1:
-
-    while k < mini :
-        for i in range(N - k):
+def check_node(square,i,j):
+    max0 = 0
+    for w in range(n):
+        if (i+w>=n) or (j+w>=m): continue
+        node = set([square[i][j],square[i+w][j],square[i][j+w],square[i+w][j+w]])
+        if len(node) == 1: max0 = max(max0,w)
+    return max0+1
             
-            for j in range(M -k):
 
-                if int(exam[i][0][j]) == int(exam[i][0][j+k]) == int(exam[i+k][0][j]) == int(exam[i+k][0][j+k]):
-                    sum.append(k)
-        
-        k += 1
-        
-    if len(sum) == 0:
-        print(1)
-    else:
-        print(pow((max(sum)+1),2))
-
-else:
-    print(1)
+n,m = list(map(int,input().split()))
+square = [[int(j) for j in input()] for i in range(n)]
+ans = 0
+for i in range(n):
+    for j in range(m):
+        ans = max(ans,check_node(square,i,j))
+        if ans == n: break
+    
+print(ans**2)
