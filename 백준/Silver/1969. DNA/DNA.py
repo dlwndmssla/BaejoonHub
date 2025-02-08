@@ -1,4 +1,3 @@
-
 n,m = list(map(int,input().split()))
 dna_list = sorted([input() for i in range(n)])
 
