@@ -1,7 +1,7 @@
 def check_node(square,i,j):
     max0 = 0
     for w in range(n):
-        if (i+w>=n) or (j+w>=m): continue
+        if (i+w>=n) or (j+w>=m): break
         node = set([square[i][j],square[i+w][j],square[i][j+w],square[i+w][j+w]])
         if len(node) == 1: max0 = max(max0,w)
     return max0+1
