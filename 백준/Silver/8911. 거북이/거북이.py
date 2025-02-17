@@ -1,31 +1,37 @@
-import copy
+import sys
+input = sys.stdin.readline
 
 def turning(dir0,c): #change - 바뀌는 방향
-    direction = [[-1,0],[0,1],[1,0],[0,-1]] #dy,dx
     if c == 'R':
-        dir = direction[(direction.index(dir0)+1)%4]
+        dir = dir1[(dir1.index(dir0)+1)%4]
     else:
-        dir = direction[direction.index(dir0)-1]
+        dir = dir1[dir1.index(dir0)-1]
     return dir
 
-for _ in range(int(input())):
-    route = str(input())
-    turtle = [0,0]
-    turtle_points = [[0,0]]
+def going(tur_y,tur_x,t,dir): #change - 바뀌는 방향
+    if t == 'F':
+        tur_y,tur_x = tur_y+dir[0],tur_x+dir[1]
+    else:
+        tur_y,tur_x = tur_y-dir[0],tur_x-dir[1]
+    return tur_y,tur_x 
+
+def one_game(route):
+    tur_y,tur_x = 0,0
+    turtle_points = [[tur_y,tur_x]]
     dir = [-1,0]
+
     for t in route:
-        if t == 'F':
-            turtle[0] += dir[0]
-            turtle[1] += dir[1]
-            turtle_points.append(copy.copy(turtle))
-        elif t == 'B':
-            turtle[0] += -dir[0]
-            turtle[1] += -dir[1]
-            turtle_points.append(copy.copy(turtle))    
+        if t in ['F','B']:
+            tur_y,tur_x = going(tur_y,tur_x,t,dir)
+            turtle_points.append([tur_y,tur_x])
         else:
             dir = turning(dir,t)
-        # print(turtle,dir)
-            
-    # print(turtle_points)
+
     points_T = [list(i) for i in zip(*turtle_points)]
     print((max(points_T[0])-min(points_T[0]))*(max(points_T[1])-min(points_T[1])))
+
+
+dir1 = [[-1,0],[0,1],[1,0],[0,-1]] #dy,dx
+for _ in range(int(input())):
+    route = str(input())
+    one_game(route)
