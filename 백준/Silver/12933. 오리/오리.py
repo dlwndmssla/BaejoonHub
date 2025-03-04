@@ -10,6 +10,9 @@ for i in a:
     if idx == 0 or quack_idx[idx-1] > quack_idx[idx]:
         quack_idx[idx] += 1
         duck_max = max(duck_max,quack_idx[0]-quack_idx[-1])
+    elif not(quack_idx[idx-1] > quack_idx[idx]):
+        print(-1)
+        exit()
 
 if quack_idx[0] == quack_idx[-1] and len(set(quack_idx2)) == 1:
     print(duck_max)
