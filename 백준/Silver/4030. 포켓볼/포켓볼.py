@@ -4,19 +4,11 @@ def find_case(a, b):
     ans = 0
     a1 = math.floor(math.sqrt(a))   
     b1 = math.ceil(math.sqrt(b))   
-    
     for n in range(a1, b1 + 1):
         X = n**2-1
-        if not (a < X+1 < b):
-            continue
-        
+        if not (a < X+1 < b): continue
         m = pow(2*n**2-7/4,0.5)-0.5
-        # n이 완전제곱수인지 확인
-
-        if m == int(m):
-            #print(pow(2*n**2-7/4,0.5)-0.5)
-            ans += 1
-
+        if m == int(m): ans += 1
     return ans
 
 cnt = 0
