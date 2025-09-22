@@ -1,8 +1,6 @@
 
-from collections import deque
-
 def moveing(n):
-    dir = deque([(0,1),(1,0),(0,-1),(-1,0)])
+    dir = [(0,1),(1,0),(0,-1),(-1,0)]
     cnt = n*n
     y,x = (1,1)
     grid = {(y,x):cnt}
