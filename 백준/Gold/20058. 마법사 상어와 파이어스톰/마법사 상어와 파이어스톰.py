@@ -3,14 +3,6 @@ from collections import deque
 global dir,n
 dir = [(0,1),(-1,0),(0,-1),(1,0)]
 
-def new(k,v,ice):
-    if not v: return v
-    (y,x),ice_red = k,0
-    for dy,dx in dir:
-        ice_red += not ice.get((y+dy,x+dx),0)
-        if ice_red >= 2: return max(v-1,0)
-    return v
-
 def do_magic(l,ice):
 
     w,t = 2**l,2**n
@@ -46,7 +38,6 @@ def find_ice(k,ice):
 def find_ans(magic,ice):
     for l in magic: ice = do_magic(l,ice)
     print(sum(ice.values()))
-    
     ans = 0
     for k,v in ice.items():
         if not v: continue
