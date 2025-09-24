@@ -3,29 +3,25 @@ from collections import deque
 global dir
 dir = [(0,1),(-1,0),(0,-1),(1,0)]
 
-def new(y,x,v,ice):
+def new(k,v,ice):
     if not v: return v
-    ice_red = 0
+    (y,x),ice_red = k,0
     for dy,dx in dir:
-        y1,x1 = y+dy,x+dx
-        ice_red += not ice.get((y1,x1),0)
-        if ice_red >= 2:
-            return max(v-1,0)
-    
+        ice_red += not ice.get((y+dy,x+dx),0)
+        if ice_red >= 2: return max(v-1,0)
     return v
 
 def do_magic(l,ice):
 
     w = 2**l
     ice = {(w*(i//w)+j%w,w*(j//w)+w-i%w-1):v for (i,j),v in ice.items()}
-    new_ice = {(y,x): new(y,x,v,ice) for (y,x),v in ice.items()}
+    new_ice = {k: new(k,v,ice) for k,v in ice.items()}
 
     return new_ice
         
 
 def find_ice(k,ice):
-    a = 0
-    queue = deque([k])
+    queue,a = deque([k]),0
     while queue:
         (y,x) = queue.pop()
         for dy,dx in dir:
@@ -52,9 +48,7 @@ def find_ans(magic,ice):
 
 
 n,q = list(map(int,input().split()))
-width = 2**n
-
-ice = {(i,j):v for i in range(width) for j,v in enumerate(list(map(int,input().split())))}
+ice = {(i,j):v for i in range(2**n) for j,v in enumerate(list(map(int,input().split())))}
 magic = list(map(int,input().split()))
 
 find_ans(magic,ice)
