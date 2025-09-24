@@ -1,6 +1,6 @@
 from collections import deque
 
-global dir
+global dir,n
 dir = [(0,1),(-1,0),(0,-1),(1,0)]
 
 def new(k,v,ice):
@@ -13,9 +13,17 @@ def new(k,v,ice):
 
 def do_magic(l,ice):
 
-    w = 2**l
+    w,t = 2**l,2**n
     ice = {(w*(i//w)+j%w,w*(j//w)+w-i%w-1):v for (i,j),v in ice.items()}
-    new_ice = {k: new(k,v,ice) for k,v in ice.items()}
+    melt = dict()
+    for k,v in ice.items():
+        melt[k] = melt.get(k,0)+k.count(0)+k.count(t-1)
+        if v: continue
+        for dy,dx in dir:
+            k1 = (k[0]+dy,k[1]+dx) 
+            if k1 not in ice: continue
+            melt[k1] = melt.get(k1,0)+1
+    new_ice = {k: max(0,v-(melt[k]>=2)) for k,v in ice.items()}
 
     return new_ice
         
