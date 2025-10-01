@@ -1,11 +1,7 @@
-
-
 global n,grid,boom
 
-from collections import deque
-
 def booming(ball):
-    k,new_ball,g = 0,dict(),deque([])
+    k,new_ball,g = 0,dict(),[]
     while True:
         v = ball.get(k,0)
         k += 1
@@ -13,16 +9,15 @@ def booming(ball):
         if v in g: g.append(v); continue
         if len(g) < 4:
             new_ball.update({y:g[0] for y in range(len(new_ball),len(new_ball)+len(g))})
-            g = deque([v])
         else: boom[g[0]] += len(g) 
-        g = deque([v])
+        g = [v]
         if v != -1: continue 
         new_ball[len(new_ball)] = v
         return new_ball
 
     
 def next_ball(ball):
-    k,v,new_ball,g,l = 0,0,{},deque([0]),-1
+    k,v,new_ball,g,l = 0,0,{},[0],-1
     while l < n*n and v != -1:
         v = ball.get(k,0)
         k += 1
@@ -31,7 +26,7 @@ def next_ball(ball):
         l += 1
         new_ball[l] = g[0]
         l += 1
-        g = deque([v])
+        g =[v]
         
     new_ball.pop(-1)
     return new_ball
@@ -43,7 +38,7 @@ def do_boom(m,ball):
     dy,dx = dirs[d]
     for s0 in range(1,s+1):
         ball_k = grid[(dy*s0+int(n/2),dx*s0+int(n/2))]
-        if ball_k in ball: ball.pop(ball_k)
+        ball.pop(ball_k, None)
 
     ball[max(ball.keys())+1] = -1
 
