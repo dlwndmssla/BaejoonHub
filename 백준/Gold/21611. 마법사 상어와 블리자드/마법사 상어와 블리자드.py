@@ -23,18 +23,16 @@ def next_ball(ball):
         k += 1
         if v in g: g.append(v); continue
         new_ball[l] = len(g)
-        l += 1
-        new_ball[l] = g[0]
-        l += 1
-        g =[v]
-        
+        new_ball[l+1] = g[0]
+        g = [v]
+        l += 2
+
     new_ball.pop(-1)
     return new_ball
 
 
 def do_boom(m,ball):
-    dirs = {1:(-1,0),2:(1,0),3:(0,-1),4:(0,1)}
-    d,s = m
+    dirs,(d,s) = {1:(-1,0),2:(1,0),3:(0,-1),4:(0,1)},m
     dy,dx = dirs[d]
     for s0 in range(1,s+1):
         ball_k = grid[(dy*s0+int(n/2),dx*s0+int(n/2))]
@@ -72,8 +70,8 @@ n,m = list(map(int,input().split()))
 grid = moveing(n)
 ball = {grid[(i,j)]:v for i in range(n) for j,v in enumerate(list(map(int,input().split()))) if v}
 for _ in range(m):
-    x = list(map(int,input().split()))
     if not ball: break
+    x = list(map(int,input().split()))
     ball = do_boom(x,ball)
 
 print(sum([k*v for k,v in boom.items()]))
