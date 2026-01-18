@@ -16,10 +16,10 @@ for a in moving:
     ky1,kx1,sy1,sx1 = ky+dy,kx+dx,sy+dy,sx+dx
     
     # print(a, f"dx,dy = {[dx,dy]}")
-    kb = not bool(set([ky1,kx1]) & set([-1,8]))
+    if bool(set([ky1,kx1]) & set([-1,8])): continue
     sb1 = ((ky1,kx1) == (sy,sx)) 
     sb2 = not bool(set([sy1,sx1]) & set([-1,8]))   
-    if not kb: continue
+
     if sb1 and not sb2: continue
     ky,kx = ky1,kx1
     sy,sx = sy+dy*sb1*sb2,sx+dx*sb1*sb2
